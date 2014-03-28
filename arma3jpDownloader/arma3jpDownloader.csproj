@@ -83,6 +83,7 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="PasswordStringEncrypter.cs" />
+    <Compile Include="Salt.cs" />
     <Compile Include="Spreadsheet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

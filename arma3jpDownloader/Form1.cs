@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Google.GData.Client;
 using System.IO;
@@ -15,13 +8,16 @@ using System.Xml;
 
 namespace arma3jpDownloader
 {
+    /// <summary>
+    /// メインフォーム
+    /// </summary>
     public partial class Form1 : Form
     {
         private Context context = new Context(); // コンフィグ
         private static readonly string configDirPath = Directory.GetCurrentDirectory() + "\\config";
         private static readonly string configFilePath = configDirPath + "\\settings.xml";
         private static readonly string tempFilename = Directory.GetCurrentDirectory() + "\\temp.dat";
-        private static readonly string salt = "パスワード暗号化用文字列";
+        private static readonly string salt = Salt.salt;
 
 
         public Form1()
@@ -37,7 +33,7 @@ namespace arma3jpDownloader
                     context = (Context)serializer.Deserialize(fs);
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message + "\nプログラムを終了します。");
+                MessageBox.Show(ex.Message + "\r\nプログラムを終了します。");
                 this.Close();
             }
 
@@ -46,21 +42,26 @@ namespace arma3jpDownloader
                 context.password = PasswordStringEncrypter.DecryptString(context.password, salt, context.username);
             }
 
-
-
             InitializeComponent();
 
+            // チェックボックス設定
             checkBox1.Checked = context.preserve;
-
+            // ユーザー名設定
             if (context.username.Length != 0) {
                 textBox1.Text = context.username;
             }
+            // パスワード設定
             if (context.password.Length != 0) {
                 textBox2.Text = context.password;
             }
             this.AcceptButton = this.button1;
         }
 
+        /// <summary>
+        /// スタートボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (this.checkBox1.Checked) {
@@ -90,8 +91,8 @@ namespace arma3jpDownloader
                     serializer.Serialize(fs, context);
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message + "\nプログラムを終了します。");
-                throw;
+                MessageBox.Show(ex.Message + "\r\nプログラムを終了します。");
+                this.Close();
             }
 
             Form2 form2 = new Form2();
@@ -192,13 +193,15 @@ namespace arma3jpDownloader
                     File.Delete(tempFilename);
                 }
             }
-
         }
 
+        /// <summary>
+        /// 終了ボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e) {
             this.Close();
         }
-
-
     }
 }

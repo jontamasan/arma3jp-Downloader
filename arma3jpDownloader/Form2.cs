@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace arma3jpDownloader {
+    /// <summary>
+    /// ログ表示フォーム
+    /// </summary>
     public partial class Form2 : Form {
         private string _strParam;
 

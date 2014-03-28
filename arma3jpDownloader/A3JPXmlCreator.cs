@@ -1,8 +1,5 @@
-﻿using Google.GData.Spreadsheets;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -12,11 +9,11 @@ namespace arma3jpDownloader {
         XmlDocument xmlDoc;
         XmlNodeList nodeList;
         private string destFileName;
-        //FileStream fs;
-        //private string intermediateFile = "\\temp.dat";
-        //private string filePath;
 
-        // temp.xml 用コンストラクタ
+        /// <summary>
+        /// temp.xml 用コンストラクタ
+        /// </summary>
+        /// <param name="fs"></param>
         public A3JPXmlCreator(FileStream fs) {
             try {
                 writer = new XmlTextWriter(fs, Encoding.GetEncoding("utf-8"));
@@ -25,7 +22,10 @@ namespace arma3jpDownloader {
             }
         }
 
-        // stringtable.xml 用コンストラクタ
+        /// <summary>
+        /// stringtable.xml 用コンストラクタ
+        /// </summary>
+        /// <param name="destFileName"></param>
         public A3JPXmlCreator(string destFileName) {
             try {
                 this.destFileName = destFileName;
@@ -81,9 +81,11 @@ namespace arma3jpDownloader {
             }
         }
 
-        // stringtable.xml 置換
-        // string id = ID
-        // string p = 置き換え文字列
+        /// <summary>
+        /// stringtable.xml 置換
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <param name="p">置き換え文字</param>
         internal void ReplaceText(string id, string p) {
             try {
                  for (int i = 0; i < nodeList.Count; ++i) {
@@ -104,7 +106,9 @@ namespace arma3jpDownloader {
             }
         }
 
-        // stringtable.xml 保存
+        /// <summary>
+        /// stringtable.xml 保存
+        /// </summary>
         internal void Save() {
             try {
                 this.xmlDoc.Save(this.destFileName);
