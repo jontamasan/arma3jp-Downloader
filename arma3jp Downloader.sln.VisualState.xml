@@ -5,9 +5,9 @@
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jp Downloader.sln" Expanded="true" />
-    <Node UniqueName="[0-1003]C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jpDownloader\bin\Debug\arma3jpDownloader.exe" Expanded="true" />
-    <Node UniqueName="[0-1004]arma3jpDownloader" Expanded="true" />
-    <Node UniqueName="[0-1005]arma3jpDownloader.Tests" Expanded="true" />
+    <Node UniqueName="[0-1004]C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jpDownloader\bin\Debug\arma3jpDownloader.exe" Expanded="true" />
+    <Node UniqueName="[0-1005]arma3jpDownloader" Expanded="true" />
+    <Node UniqueName="[0-1006]arma3jpDownloader.Tests" Expanded="true" />
     <Node UniqueName="[0-1001]arma3jpDownloader.Tests.a3jpDownloaderTests" Expanded="true" />
   </Nodes>
 </VisualState>

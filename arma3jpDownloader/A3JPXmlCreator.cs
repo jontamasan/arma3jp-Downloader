@@ -10,6 +10,7 @@ namespace arma3jpDownloader {
         XmlNodeList nodeList;
         private string destFileName;
 
+        #region temp.xml 作成
         /// <summary>
         /// temp.xml 用コンストラクタ
         /// </summary>
@@ -17,22 +18,6 @@ namespace arma3jpDownloader {
         public A3JPXmlCreator(FileStream fs) {
             try {
                 writer = new XmlTextWriter(fs, Encoding.GetEncoding("utf-8"));
-            } catch (Exception) {
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// stringtable.xml 用コンストラクタ
-        /// </summary>
-        /// <param name="destFileName"></param>
-        public A3JPXmlCreator(string destFileName) {
-            try {
-                this.destFileName = destFileName;
-                this.xmlDoc = new XmlDocument();
-                this.xmlDoc.Load(this.destFileName);
-                XmlElement rootElement = this.xmlDoc.DocumentElement;
-                this.nodeList = rootElement.GetElementsByTagName("Key");
             } catch (Exception) {
                 throw;
             }
@@ -48,7 +33,7 @@ namespace arma3jpDownloader {
             }
         }
 
-        internal void WriteTempFile(uint column, string elementString) {
+        public void WriteTempBody(uint column, string elementString) {
             try {
                 switch (column) {
                     case 2:
@@ -78,6 +63,24 @@ namespace arma3jpDownloader {
                 if (writer != null) {
                     writer.Close();
                 }
+            }
+        }
+        #endregion
+
+        #region stringtable.xml 作成
+        /// <summary>
+        /// stringtable.xml 用コンストラクタ
+        /// </summary>
+        /// <param name="destFileName"></param>
+        public A3JPXmlCreator(string destFileName) {
+            try {
+                this.destFileName = destFileName;
+                this.xmlDoc = new XmlDocument();
+                this.xmlDoc.Load(this.destFileName);
+                XmlElement rootElement = this.xmlDoc.DocumentElement;
+                this.nodeList = rootElement.GetElementsByTagName("Key");
+            } catch (Exception) {
+                throw;
             }
         }
 
@@ -116,6 +119,7 @@ namespace arma3jpDownloader {
                 throw;
             }
         }
+        #endregion
     }
 
 }

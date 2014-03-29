@@ -16,9 +16,8 @@ namespace arma3jpDownloader
         private Context context = new Context(); // コンフィグ
         private static readonly string configDirPath = Directory.GetCurrentDirectory() + "\\config";
         private static readonly string configFilePath = configDirPath + "\\settings.xml";
-        private static readonly string tempFilename = Directory.GetCurrentDirectory() + "\\temp.dat";
+        private static readonly string TEMP_FILENAME = Directory.GetCurrentDirectory() + "\\temp.dat";
         private static readonly string salt = Salt.salt;
-
 
         public Form1()
         {
@@ -38,8 +37,9 @@ namespace arma3jpDownloader
             }
 
             // パスワード復号化
+            Password password = new Password(context.username, context.password);
             if (context.password.Length != 0) {
-                context.password = PasswordStringEncrypter.DecryptString(context.password, salt, context.username);
+                context.password = password.Decrypt();
             }
 
             InitializeComponent();
@@ -64,6 +64,7 @@ namespace arma3jpDownloader
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            #region チェックボックス取得
             if (this.checkBox1.Checked) {
                 // ユーザー情報を保存
                 context.username = textBox1.Text;
@@ -74,14 +75,15 @@ namespace arma3jpDownloader
                 context.password = "";
                 context.preserve = false;
             }
+            #endregion
+
             string USERNAME = textBox1.Text;
             string PASSWORD = textBox2.Text;
-
-            Console.WriteLine(this.checkBox1.Checked);
             
             if (context.password.Length != 0) {
                 // パスワード暗号化
-                context.password = PasswordStringEncrypter.EncryptString(context.password, salt, context.username);
+                Password password = new Password(context.username, context.password);
+                context.password = password.Decrypt();
             }
 
             // 設定ファイル書込み
@@ -94,7 +96,8 @@ namespace arma3jpDownloader
                 MessageBox.Show(ex.Message + "\r\nプログラムを終了します。");
                 this.Close();
             }
-
+#if t
+            // ログ表示
             Form2 form2 = new Form2();
             form2.Show();
             this.button1.Enabled = false;
@@ -125,14 +128,14 @@ namespace arma3jpDownloader
                     }
 
                     // 中間ファイル作成
-                    using (FileStream fs = new FileStream(tempFilename, FileMode.Append, FileAccess.Write)) {
+                    using (FileStream fs = new FileStream(TEMP_FILENAME, FileMode.Append, FileAccess.Write)) {
                         A3JPXmlCreator xmlTemp = new A3JPXmlCreator(fs);
                         string missionID = key.ID;
                         xmlTemp.StartTempFile(missionID);
 
                         // Iterate through each cell, printing its value.
                         foreach (CellEntry cell in cellFeed.Entries) {
-                            xmlTemp.WriteTempFile(cell.Column, cell.Value);
+                            xmlTemp.WriteTempBody(cell.Column, cell.Value);
                         }
                         xmlTemp.EndTempFile();
                         
@@ -142,7 +145,7 @@ namespace arma3jpDownloader
 
                     // 置換
                     A3JPXmlCreator xmlStringtable = new A3JPXmlCreator(destFileName);
-                    XmlTextReader source = new XmlTextReader(tempFilename);
+                    XmlTextReader source = new XmlTextReader(TEMP_FILENAME);
                     while (source.Read()) {
                         string id = "";
                         string p = "";
@@ -167,8 +170,8 @@ namespace arma3jpDownloader
                     xmlStringtable.Save();
 
                     // 中間ファイル削除
-                    if (File.Exists(tempFilename)) {
-                        File.Delete(tempFilename);
+                    if (File.Exists(TEMP_FILENAME)) {
+                        File.Delete(TEMP_FILENAME);
                     }
                 } // foreach (Key key in context.keys)
 
@@ -189,10 +192,11 @@ namespace arma3jpDownloader
                 this.button1.Enabled = true;
                 this.button2.Enabled = true;
                 // 中間ファイル削除
-                if (File.Exists(tempFilename)) {
-                    File.Delete(tempFilename);
+                if (File.Exists(TEMP_FILENAME)) {
+                    File.Delete(TEMP_FILENAME);
                 }
             }
+#endif
         }
 
         /// <summary>

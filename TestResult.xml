@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jp Downloader.sln" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-03-27" time="00:29:07">
+<test-results name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jp Downloader.sln" total="3" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-03-30" time="07:03:07">
   <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="D:\Program Files (x86)\NUnit 2.6.3\bin" machine-name="JON-PC" user="jon" user-domain="jon-PC" />
   <culture-info current-culture="ja-JP" current-uiculture="ja-JP" />
-  <test-suite type="Project" name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jp Downloader.sln" executed="True" result="Success" success="True" time="0.080" asserts="0">
+  <test-suite type="Project" name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jp Downloader.sln" executed="True" result="Success" success="True" time="0.174" asserts="0">
     <results>
-      <test-suite type="Assembly" name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jpDownloader\bin\Debug\arma3jpDownloader.exe" executed="True" result="Success" success="True" time="0.058" asserts="0">
+      <test-suite type="Assembly" name="C:\Users\jon\Documents\Visual Studio 2013\Projects\arma3jp Downloader\arma3jpDownloader\bin\Debug\arma3jpDownloader.exe" executed="True" result="Success" success="True" time="0.151" asserts="0">
         <results>
-          <test-suite type="Namespace" name="arma3jpDownloader" executed="True" result="Success" success="True" time="0.058" asserts="0">
+          <test-suite type="Namespace" name="arma3jpDownloader" executed="True" result="Success" success="True" time="0.150" asserts="0">
             <results>
-              <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="0.057" asserts="0">
+              <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="0.150" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="a3jpDownloaderTests" executed="True" result="Success" success="True" time="0.054" asserts="0">
+                  <test-suite type="TestFixture" name="a3jpDownloaderTests" executed="True" result="Success" success="True" time="0.146" asserts="0">
                     <results>
-                      <test-case name="arma3jpDownloader.Tests.a3jpDownloaderTests.UserNmae" executed="True" result="Success" success="True" time="0.039" asserts="1" />
+                      <test-case name="arma3jpDownloader.Tests.a3jpDownloaderTests.TestPasswordDecrypt" executed="True" result="Success" success="True" time="0.073" asserts="1" />
+                      <test-case name="arma3jpDownloader.Tests.a3jpDownloaderTests.TestWriteTempBody" executed="True" result="Success" success="True" time="0.033" asserts="0" />
+                      <test-case name="arma3jpDownloader.Tests.a3jpDownloaderTests.UserNmae" executed="True" result="Success" success="True" time="0.011" asserts="1" />
                     </results>
                   </test-suite>
                 </results>
