@@ -96,7 +96,7 @@ namespace arma3jpDownloader
                 MessageBox.Show(ex.Message + "\r\nプログラムを終了します。");
                 this.Close();
             }
-#if t
+
             // ログ表示
             Form2 form2 = new Form2();
             form2.Show();
@@ -196,7 +196,7 @@ namespace arma3jpDownloader
                     File.Delete(TEMP_FILENAME);
                 }
             }
-#endif
+
         }
 
         /// <summary>
