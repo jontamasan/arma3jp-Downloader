@@ -4,8 +4,8 @@ namespace arma3jpDownloader {
     public class Key {
         [XmlAttribute("name")]
         public string ID { get; set; }
-
-        public string feedKey { get; set; }
+        [XmlElement]
+        public string[] feedKey { get; set; }
     }
 
     [XmlRoot("context")]
@@ -13,7 +13,7 @@ namespace arma3jpDownloader {
         public bool preserve;
         public string username { get; set; }
         public string password { get; set; }
-        public string feedURI { get; set; }
+        public string feedBaseURI { get; set; }
         public Key[] keys { get; set; }
     }
 }

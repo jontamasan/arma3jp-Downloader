@@ -25,7 +25,7 @@ namespace arma3jpDownloader
             context.password = "";
             context.preserve = false; // CheckBox
 
-            // 設定読込み
+             // 設定読込み
              try {
                  using (FileStream fs = File.OpenRead(configFilePath)) {
                     XmlSerializer serializer = new XmlSerializer(typeof(Context));
@@ -37,9 +37,8 @@ namespace arma3jpDownloader
             }
 
             // パスワード復号化
-            Password password = new Password(context.username, context.password);
             if (context.password.Length != 0) {
-                context.password = password.Decrypt();
+                context.password = Password.Decrypt(context.username, context.password);
             }
 
             InitializeComponent();
@@ -82,8 +81,7 @@ namespace arma3jpDownloader
             
             if (context.password.Length != 0) {
                 // パスワード暗号化
-                Password password = new Password(context.username, context.password);
-                context.password = password.Decrypt();
+                context.password = Password.Encrypt(context.username, context.password);
             }
 
             // 設定ファイル書込み
@@ -108,72 +106,80 @@ namespace arma3jpDownloader
                 // ログイン設定
                 sheet.setUser();
                 // シート取得
-                string feedURI = context.feedURI;
+                string feedBaseURI = context.feedBaseURI;
                 foreach (Key key in context.keys) {
-                    string uri = feedURI + key.feedKey;
-                    
-                    form2.strParam =  uri + "\r\nフィードを取得中...\r\n";
-                   
-                    CellFeed cellFeed = sheet.fetch(uri);
-                    if (cellFeed == null) {
-                        MessageBox.Show(uri + "\r\nスプレッドシートがありません。");
-                        break; // abort
-                    }
+                    foreach (string feed in key.feedKey) {
+                        string uri = feedBaseURI + feed;
 
-                    // stringtable_original.xmlコピー
-                    string originalFileName = configDirPath + "\\stringtable_" + key.ID + ".xml";
-                    string destFileName = Directory.GetCurrentDirectory() + "\\(" + key.ID + ")" +"stringtable.xml";
-                    if (!File.Exists(destFileName)) {
-                        File.Copy(originalFileName, destFileName);
-                    }
+                        form2.strParam = uri + "\r\nフィードを取得中...\r\n";
 
-                    // 中間ファイル作成
-                    using (FileStream fs = new FileStream(TEMP_FILENAME, FileMode.Append, FileAccess.Write)) {
-                        A3JPXmlCreator xmlTemp = new A3JPXmlCreator(fs);
-                        string missionID = key.ID;
-                        xmlTemp.StartTempFile(missionID);
-
-                        // Iterate through each cell, printing its value.
-                        foreach (CellEntry cell in cellFeed.Entries) {
-                            xmlTemp.WriteTempBody(cell.Column, cell.Value);
+                        CellFeed cellFeed = sheet.fetch(uri);
+                        if (cellFeed == null) {
+                            MessageBox.Show(uri + "\r\nスプレッドシートがありません。");
+                            break; // abort
                         }
-                        xmlTemp.EndTempFile();
-                        
-                    }
 
-                    form2.strParam = "\r\nstringtable.xml を作成中...\r\n\r\n";
+                        // stringtable_original.xmlコピー
+                        string originalFileName = configDirPath + "\\stringtable_" + key.ID + ".xml";
+                        string destFileName = Directory.GetCurrentDirectory() + "\\(" + key.ID + ")" + "stringtable.xml";
+                        if (!File.Exists(destFileName)) {
+                            File.Copy(originalFileName, destFileName);
+                        }
 
-                    // 置換
-                    A3JPXmlCreator xmlStringtable = new A3JPXmlCreator(destFileName);
-                    XmlTextReader source = new XmlTextReader(TEMP_FILENAME);
-                    while (source.Read()) {
-                        string id = "";
-                        string p = "";
-                        source.MoveToContent();
-                        if (source.NodeType == XmlNodeType.Element && source.HasAttributes) {
-                            source.MoveToAttribute("ID");
-                            id = source.Value; // <Key ID="" />
-                            source.MoveToElement();
-                            for (int i = 0; i < 4; ++i) {
-                                // ノード進める
-                                source.Read();
-                                source.MoveToContent();
+                        // 中間ファイル作成
+                        using (FileStream fs = new FileStream(TEMP_FILENAME, FileMode.Append, FileAccess.Write)) {
+                            A3JPXmlCreator xmlTemp = new A3JPXmlCreator(fs);
+                            string missionID = key.ID;
+                            xmlTemp.StartTempFile(missionID);
+
+                            // Iterate through each cell, printing its value.
+                            foreach (CellEntry cell in cellFeed.Entries) {
+                                xmlTemp.WriteTempBody(cell.Column, cell.Value);
                             }
-                            p = source.ReadString(); // <English></English>
-                            
-                            // stringtable.xml 置換
-                            xmlStringtable.ReplaceText(id, p); 
-                            
-                        }
-                    }
-                    source.Close();
-                    xmlStringtable.Save();
+                            xmlTemp.EndTempFile();
 
-                    // 中間ファイル削除
-                    if (File.Exists(TEMP_FILENAME)) {
-                        File.Delete(TEMP_FILENAME);
-                    }
+                        }
+
+                        form2.strParam = "\r\nstringtable.xml を作成中...\r\n\r\n";
+
+                        // 置換
+                        A3JPXmlCreator xmlStringtable = new A3JPXmlCreator(destFileName);
+                        XmlTextReader source = new XmlTextReader(TEMP_FILENAME);
+                        while (source.Read()) {
+                            string id = "";
+                            string p = "";
+                            source.MoveToContent();
+                            if (source.NodeType == XmlNodeType.Element && source.HasAttributes) {
+                                source.MoveToAttribute("ID");
+                                id = source.Value; // <Key ID="" />
+                                source.MoveToElement();
+                                for (int i = 0; i < 4; ++i) {
+                                    // ノード進める
+                                    source.Read();
+                                    source.MoveToContent();
+                                }
+                                p = source.ReadString(); // <English></English>
+
+                                // stringtable.xml 置換
+                                xmlStringtable.ReplaceText(id, p);
+
+                            }
+                        }
+                        source.Close();
+                        xmlStringtable.Save();
+
+                        // 中間ファイル削除
+                        if (File.Exists(TEMP_FILENAME)) {
+                            File.Delete(TEMP_FILENAME);
+                        }
+
+                        // pboファイル名抽出
+                    } // foreach (string feed in key.feedKey)
                 } // foreach (Key key in context.keys)
+
+                #region Create PBO
+                //PBO.CreatePBO();
+                #endregion
 
                 form2.strParam = "終了しました。";
 

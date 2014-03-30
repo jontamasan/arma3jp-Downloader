@@ -8,21 +8,14 @@ namespace arma3jpDownloader {
     /// パスワード暗号化復号化管理クラス。
     /// 実際にはPasswordStringEncrypterクラスが行う。
     /// </summary>
-    class Password {
-        private string sourceString;
-        private string password;
-
-        public Password(string username, string password) {
-            this.sourceString = password;
-            this.password = username;
-        }
+    public static class Password {
 
         // 暗号化
-        internal string Encrypt() {
+        public static string Encrypt(string password, string sourceString) {
             return PasswordStringEncrypter.EncryptString(sourceString, Salt.salt, password);
         }
         // 復号化
-        internal string Decrypt() {
+        public static string Decrypt(string password, string sourceString) {
             return PasswordStringEncrypter.DecryptString(sourceString, Salt.salt, password);
         }
     }

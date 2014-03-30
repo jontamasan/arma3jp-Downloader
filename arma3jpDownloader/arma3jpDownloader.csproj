@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Password.cs" />
     <Compile Include="PasswordStringEncrypter.cs" />
+    <Compile Include="PBO.cs" />
     <Compile Include="Salt.cs" />
     <Compile Include="Spreadsheet.cs" />
     <Compile Include="Program.cs" />

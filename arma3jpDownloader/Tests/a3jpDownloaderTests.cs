@@ -11,17 +11,6 @@ namespace arma3jpDownloader.Tests {
     class a3jpDownloaderTests {
         private Context context;
 
-        [SetUp]
-        protected void SetUp() {
-            context = new Context();
-        }
-
-        [Test]
-        public void UserNmae() {
-            context.username = "test user";
-            Assert.AreEqual("test user", context.username);
-            
-        }
 
         //[Test]
         //public void StartTempFileTest() {
@@ -46,10 +35,8 @@ namespace arma3jpDownloader.Tests {
         public void TestPasswordDecrypt() {
             string user = "unko";
             string pass = "manco";
-            Password password = new Password(user, pass);
-            string crypt = password.Encrypt(); // 暗号化
-            password = new Password(user, crypt);
-            string expect = password.Decrypt(); // 復号化
+            string crypt = Password.Encrypt(user, pass); // 暗号化
+            string expect = Password.Decrypt(user, crypt); // 復号化
 
             Assert.That(expect == "manco");
         }
