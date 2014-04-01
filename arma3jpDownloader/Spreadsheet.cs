@@ -15,7 +15,7 @@ namespace arma3jpDownloader
         public Spreadsheet(string username, string password) {
             this.USERNAME = username;
             this.PASSWORD = password;
-            this.service = new SpreadsheetsService("arma3Downloader-v1");
+            this.service = new SpreadsheetsService("arma3Downloader-v2.0");
 
         }
 
