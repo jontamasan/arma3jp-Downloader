@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace arma3jpDownloader {
     /// <summary>
     /// パスワード暗号化復号化管理クラス。

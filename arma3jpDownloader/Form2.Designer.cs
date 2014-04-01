@@ -41,7 +41,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(282, 250);
             this.Controls.Add(this.textBox1);
+            this.MaximizeBox = false;
             this.Name = "Form2";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Log";
             this.ResumeLayout(false);
             this.PerformLayout();
