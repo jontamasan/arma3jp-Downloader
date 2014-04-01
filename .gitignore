@@ -155,3 +155,4 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 arma3jpDownloader/Salt.cs
+/arma3jpDownloader/Salt.cs
