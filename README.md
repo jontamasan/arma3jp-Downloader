@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Arm3jp Downloaderのソースコード
 
 https://code.google.com/p/google-gdata/downloads/list
@@ -16,4 +15,3 @@ Spreadsheet.cs が要のスプレッドシート取得部分です。
 https://developers.google.com/google-apps/spreadsheets/#authorizing_requests_with_clientlogin
 
 ※カレントディレクトリに config フォルダとファイルが必要。
->>>>>>> 7e7de2c12d7dbb797d3322ffb709e8ff71bd266a
