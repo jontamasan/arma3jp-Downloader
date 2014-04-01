@@ -1,67 +1,79 @@
 /////////////////////////////////
-//    Arma3jp Downloader   //
-//    Ver 1.0                         //
+//      Arma3jp Downloader     //
+//      Ver 2.0                //
 /////////////////////////////////
-Arma3 ���{�ꉻ��ƃV�[�g����|��t�@�C�����ꊇ�_�E�����[�h���Č���t�@�C�����쐬���܂��B
+Arma3 日本語化作業シートから翻訳ファイルを一括ダウンロードして言語ファイルを作成します。
+Ver2ではpboファイルの作成も行います。
 
-�������
-�@�E.NET Framework 4.5�ŋL�q���Ă��܂��B
-�@�EWindows7pro 64bit�œ���m�F���s���Ă��܂��B
+◎動作環境
+　・.NET Framework 4.5で記述しています。
+　・Windows7pro 64bitで動作確認を行っています。
 
-���C���X�g�[��
-�@�_�E�����[�h�����t�@�C�����𓀂��Ă��������B
+◎インストール
+　ダウンロードしたファイルを解凍してください。
 
-���A���C���X�g�[��
-�@�t�H���_�ƃt�@�C�����폜���Ă��������B
+◎アンインストール
+　フォルダとファイルを削除してください。
 
-���g�p���@
-�@Google�A�J�E���g����͂��ăX�^�[�g�{�^���������Ă��΂炭�����
-�@���s�t�@�C���Ɠ����ꏊ�� (�p�b�P�[�W��)stringtable.xml ���o���オ��܂��B
-�@stringtable.xml �Ƀ��l�[�����Ċe��pbo�t�@�C���Ɏ�荞��ł��������B
-�@
-�@�Q�l
-�@pbo�t�@�C���쐬: Arma3 ���{�ꉻwiki - �|��E���{�ꉻ���@
-�@http://www59.atwiki.jp/arma3jptranslation/pages/19.html
+◎使用方法
+　Googleアカウントを入力してスタートボタンを押してしばらくすると
+　実行ファイルと同じ場所に (パッケージ名)stringtable.xml が出来上がります。
+　同時にpboも作成されます。
+　
+◎仕様
+　config/stringtable_[パッケージ名].xml とIDを照合して翻訳を反映したxmlファイルを作成します。
 
-���d�l
-�@config/stringtable_[�p�b�P�[�W��].xml ��ID���ƍ����Ė|��𔽉f����xml�t�@�C�����쐬���܂��B
+　翻訳シートが増えた場合は以下のフォーマットで config/settings.xml に追加します。
 
-�@�|��V�[�g���������ꍇ�͈ȉ��̃t�H�[�}�b�g�� config/settings.xml �ɒǉ����܂��B
+　・スプレッドシートの指定
+　　<feedKey> Googleスプレッドシートのkey </feedKey>
+　　https://docs.google.com/spreadsheet/ccc?key=＜ここが key になります＞&usp=drive_web#gid=0
 
-�@�E�X�v���b�h�V�[�g�̎w��
-�@�@<feedKey> Google�X�v���b�h�V�[�g��key </feedKey>
-�@�@https://docs.google.com/spreadsheet/ccc?key=�u������ key �ɂȂ�܂��v&usp=drive_web#gid=0
+　・パッケージ名の指定
+　　<Key name=" パッケージ名 ">
+　　ここで指定した文字列が作成されるPBOファイル名になります。
 
-�@�E�p�b�P�[�W���̎w��
-�@�@<Key name=" �p�b�P�[�W�� ">
-�@�@�����Ŏw�肵�������񂪍쐬�����t�@�C���ɐړ����Ƃ��ĕt������܂��B
-�@�@�I���W�i�� stringtable.xml �̐擪�ɂ��� <Package name=""> ���Q�l�ɂ���Ƃ����ł��傤�B
+　【例】
+　========
+　　「Survive - Drawdown 2031」と「Survive - Situation Nomal」を languagemissions_f_epa.pbo として作成する。
 
-�@�y��z
-�@========
-�@�@�uSurvive - Drawdown 2031�v�ƁuSurvive - Situation Nomal�v�� (Languagemissions_EPA)stringtable.xml �Ƃ��č쐬����B
-
-	    <Key name="Languagemissions_EPA">
+	    <Key name="languagemissions_f_epa">
 	          <feedKey>0AoIUQevB0Yo9dHlwaTN4ZnhUckV3RWlibjZuQWY3RWc</feedKey>
-	    </Key>
-	    <Key name="Languagemissions_EPA">
 	          <feedKey>0AoIUQevB0Yo9dGs0ZTJDYTZ4YlA3Wkw2dXdFYXN5TlE</feedKey>
 	    </Key>
-�@========
-�@�@�uAdapt - Signal Lost�v�� (Languagemissions_EPB)stringtable.xml �Ƃ��č쐬����B
+　========
+　　「Adapt - Signal Lost」を languagemissions_f_epb.pbo として作成する。
 
-	    <Key name="Languagemissions_EPB">
+	    <Key name="languagemissions_f_epb">
 	          <feedKey>0AoIUQevB0Yo9dDNENFpmQ0Itd0xoeDdVWXUxUkVCMEE</feedKey>
 	    </Key>
-�@=========
+　=========
 
-�@�E���炩���� config �t�H���_�ɂ�
-�@�@languagemissions_f_epa.pbo �� languagemissions_f_epb.pbo �̃I���W�i�� stringtable.xml ����A
-�@�@stringtable_Languagemissions_EPA.xml �� stringtable_Languagemissions_EPB.xml
-�@�@�Ƃ��ėp�ӂ��Ă���܂��B
-�@�@�V���ɖ|�󂷂�t�@�C�����������ꍇ�ɂ� stringtable_[�p�b�P�[�W��].xml �Ƃ��Ċe���p�ӂ��Ă��������B
+　・あらかじめ config フォルダにはゲームオリジナルの
+　　languagemissions_f_epa.pbo と 
+　　languagemissions_f_epb.pbo と
+　　languagemissions_f_epc.pbo それぞれ stringtable.xml を抽出して、
 
-���Ɛӎ������̑�
-�@�E���v���O�������g�p�������ɂ�邢���Ȃ鑹�Q����҂͐ӔC�𕉂��܂���B
-�@�E���ȐӔC�̏�ł��g�p���������B
-�@�E���\�t�g�œ��͂��ꂽGoogle�A�J�E���g����Google�X�v���b�h�V�[�g�̎擾�ɂ̂ݎg���܂��B
+　　stringtable_languagemissions_f_epa.xml と
+　　stringtable_languagemissions_f_epa.xml と
+　　stringtable_languagemissions_f_epc.xml が用意してあります。
+
+　　新たに翻訳するファイルが増えた場合には stringtable_[パッケージ名].xml として各自用意してください。
+
+◎更新履歴
+　・2014/03/08 Ver 1.0 公開
+　・2014/04/01 Ver 2.0 公開　pboファイル作成対応
+
+◎免責事項その他
+　・当プログラムを使用した事によるいかなる損害も作者は責任を負いません。
+　・自己責任の上でご使用ください。
+　・当ソフトで入力されたGoogleアカウント情報はGoogleスプレッドシートの取得にのみ使われます。
+　・営利目的を除いて再配布は自由です。改変する場合はソースコードも含めてください。
+
+◎日本語化作業所シート
+　https://docs.google.com/spreadsheet/ccc?key=0AoIUQevB0Yo9dHE5MkFwU1d3ekFLRGVudDROQmp4d2c
+
+◎ソースコード
+　https://github.com/jontamasan/arma3jp-Downloader/tree/v2.0
+
+@jontamasan
