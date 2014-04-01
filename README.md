@@ -13,3 +13,5 @@ Spreadsheet.cs が要のスプレッドシート取得部分です。
 
 参考: Google Spreadsheets API version 3.0
 https://developers.google.com/google-apps/spreadsheets/#authorizing_requests_with_clientlogin
+
+※カレントディレクトリに config フォルダとファイルが必要。
