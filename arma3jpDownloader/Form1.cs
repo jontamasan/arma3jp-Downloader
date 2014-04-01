@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using Google.GData.Client;
 using System.IO;
 using System.Xml.Serialization;
-using Google.GData.Spreadsheets;
 using System.Xml;
+using Google.GData.Client;
+using Google.GData.Spreadsheets;
+using Google.GData.Extensions;
 
 namespace arma3jpDownloader
 {
@@ -88,7 +89,9 @@ namespace arma3jpDownloader
             try {
                 using (FileStream fs = File.Create(configFilePath)) {
                     XmlSerializer serializer = new XmlSerializer(typeof(Context));
-                    serializer.Serialize(fs, context);
+                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                    ns.Add(String.Empty, string.Empty); // 空のXml名前空間を渡す
+                    serializer.Serialize(fs, context, ns);
                 }
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\nプログラムを終了します。");
@@ -119,6 +122,8 @@ namespace arma3jpDownloader
                             break; // abort
                         }
 
+                        Application.DoEvents();
+
                         // stringtable_original.xmlコピー
                         string originalFileName = configDirPath + "\\stringtable_" + key.ID + ".xml";
                         string destFileName = Directory.GetCurrentDirectory() + "\\(" + key.ID + ")" + "stringtable.xml";
@@ -141,6 +146,7 @@ namespace arma3jpDownloader
                         }
 
                         form2.strParam = "\r\nstringtable.xml を作成中...\r\n\r\n";
+                        Application.DoEvents();
 
                         // 置換
                         A3JPXmlCreator xmlStringtable = new A3JPXmlCreator(destFileName);
@@ -173,16 +179,16 @@ namespace arma3jpDownloader
                             File.Delete(TEMP_FILENAME);
                         }
 
-                        // pboファイル名抽出
+                        Application.DoEvents();
+
                     } // foreach (string feed in key.feedKey)
                 } // foreach (Key key in context.keys)
-
                 #region Create PBO
-                //PBO.CreatePBO();
+                form2.strParam = "pboファイル作成中...\r\n";
+                PBO.CreatePBO(context.keys);
                 #endregion
 
                 form2.strParam = "終了しました。";
-
             } catch (InvalidCredentialsException ex) {
                 // 認証エラー
                 MessageBox.Show(ex.Message + "\r\nログインできません。");
@@ -202,7 +208,6 @@ namespace arma3jpDownloader
                     File.Delete(TEMP_FILENAME);
                 }
             }
-
         }
 
         /// <summary>
